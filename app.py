@@ -23,7 +23,7 @@ def generate():
     key = "".join(str(random.randint(0, 9)) for _ in range(10))
 
     KEYS[key] = {
-        "expired": time.time() + 10800,  # 3 jam
+        "expired": time.time() + 3600,  
         "verified": False
     }
 
