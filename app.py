@@ -8,10 +8,8 @@ app = FastAPI()
 
 KEYS = {}
 
-
 class Validate(BaseModel):
     key: str
-    client_id: str
 
 
 @app.get("/")
@@ -26,8 +24,7 @@ def generate():
 
     KEYS[key] = {
         "expired": time.time() + 10800,  # 3 jam
-        "verified": False,
-        "client_id": None
+        "verified": False
     }
 
     return f"KEY: {key}"
@@ -69,33 +66,21 @@ def validate(data: Validate):
             "message": "key tidak ditemukan"
         }
 
-    key_data = KEYS[data.key]
-
-    if time.time() > key_data["expired"]:
+    if time.time() > KEYS[data.key]["expired"]:
         del KEYS[data.key]
         return {
             "success": False,
             "message": "expired"
         }
 
-    if not key_data["verified"]:
+    if not KEYS[data.key]["verified"]:
         return {
             "success": False,
             "message": "belum verify"
-        }
-
-    # Ikat ke client pertama
-    if key_data["client_id"] is None:
-        key_data["client_id"] = data.client_id
-
-    # Tolak jika client berbeda
-    elif key_data["client_id"] != data.client_id:
-        return {
-            "success": False,
-            "message": "key digunakan oleh client lain"
         }
 
     return {
         "success": True,
         "message": "KEY VALID"
     }
+    
