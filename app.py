@@ -41,6 +41,7 @@ def verify(kode: str):
         del KEYS[kode]
         return "<h2>⌛ KEY SUDAH EXPIRED</h2>"
 
+    # Tandai key sudah diverifikasi
     KEYS[kode]["verified"] = True
 
     return f"""
@@ -49,25 +50,65 @@ def verify(kode: str):
     <head>
         <title>Verify Key</title>
         <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                text-align: center;
+                margin: 0;
+                padding-top: 60px;
+                background: #ffffff;
+            }}
+
+            .container {{
+                width: 100%;
+                max-width: 800px;
+                margin: auto;
+            }}
+
+            .ad {{
+                margin: 30px auto;
+                width: 100%;
+                max-width: 728px;
+            }}
+
+            iframe {{
+                display: block;
+                width: 728px;
+                height: 90px;
+                max-width: 100%;
+                margin: auto;
+                border: 0;
+                overflow: hidden;
+            }}
+        </style>
     </head>
 
-    <body style="font-family:Arial;text-align:center;margin-top:60px">
+    <body>
 
-        <h2>✅ KEY BERHASIL DIVERIFIKASI</h2>
-        <h3>{kode}</h3>
+        <div class="container">
 
-        <!-- 1POP -->
-        <script type="text/javascript">
-        (function() {{
-            var p = document.createElement('script');
-            p.type = 'text/javascript';
-            p.async = true;
-            p.src = 'https://1pop.online/ad/serve?zone=ZONE_0CBEE4FFE579EC6B';
+            <h2>✅ KEY BERHASIL DIVERIFIKASI</h2>
 
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(p, s);
-        }})();
-        </script>
+            <h3>{kode}</h3>
+
+            <!-- 1POP BANNER -->
+            <div class="ad">
+
+                <iframe
+                    src="https://1pop.online/ad/banner?zone=ZONE_0CBEE4FFE579EC6B&size=728x90"
+                    width="728"
+                    height="90"
+                    frameborder="0"
+                    scrolling="no"
+                    style="border:0;overflow:hidden;max-width:100%;">
+                </iframe>
+
+            </div>
+
+        </div>
 
     </body>
     </html>
@@ -85,6 +126,7 @@ def validate(data: Validate):
 
     if time.time() > KEYS[data.key]["expired"]:
         del KEYS[data.key]
+
         return {
             "success": False,
             "message": "expired"
