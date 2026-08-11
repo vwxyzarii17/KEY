@@ -8,6 +8,7 @@ app = FastAPI()
 
 KEYS = {}
 
+
 class Validate(BaseModel):
     key: str
 
@@ -23,7 +24,7 @@ def generate():
     key = "".join(str(random.randint(0, 9)) for _ in range(10))
 
     KEYS[key] = {
-        "expired": time.time() + 3600,  
+        "expired": time.time() + 3600,
         "verified": False
     }
 
@@ -49,9 +50,25 @@ def verify(kode: str):
         <title>Verify Key</title>
         <meta charset="UTF-8">
     </head>
+
     <body style="font-family:Arial;text-align:center;margin-top:60px">
+
         <h2>✅ KEY BERHASIL DIVERIFIKASI</h2>
         <h3>{kode}</h3>
+
+        <!-- 1POP -->
+        <script type="text/javascript">
+        (function() {{
+            var p = document.createElement('script');
+            p.type = 'text/javascript';
+            p.async = true;
+            p.src = 'https://1pop.online/ad/serve?zone=ZONE_0CBEE4FFE579EC6B';
+
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(p, s);
+        }})();
+        </script>
+
     </body>
     </html>
     """
@@ -83,4 +100,3 @@ def validate(data: Validate):
         "success": True,
         "message": "KEY VALID"
     }
-    
