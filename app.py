@@ -20,7 +20,6 @@ def home():
 
 @app.get("/generate", response_class=PlainTextResponse)
 def generate():
-
     key = "".join(str(random.randint(0, 9)) for _ in range(10))
 
     KEYS[key] = {
@@ -45,74 +44,64 @@ def verify(kode: str):
     KEYS[kode]["verified"] = True
 
     return f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Verify Key</title>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify Key</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-        <style>
-            body {{
-                font-family: Arial, sans-serif;
-                text-align: center;
-                margin: 0;
-                padding-top: 60px;
-                background: #ffffff;
-            }}
+    <!-- Adcash Library -->
+    <script id="aclib"
+            type="text/javascript"
+            src="//acscdn.com/script/aclib.js"></script>
 
-            .container {{
-                width: 100%;
-                max-width: 800px;
-                margin: auto;
-            }}
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-top: 60px;
+            background: #ffffff;
+        }}
 
-            .ad {{
-                margin: 30px auto;
-                width: 100%;
-                max-width: 728px;
-            }}
+        .container {{
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+        }}
 
-            iframe {{
-                display: block;
-                width: 728px;
-                height: 90px;
-                max-width: 100%;
-                margin: auto;
-                border: 0;
-                overflow: hidden;
-            }}
-        </style>
-    </head>
+        .ad {{
+            width: 100%;
+            max-width: 728px;
+            margin: 30px auto;
+        }}
+    </style>
+</head>
 
-    <body>
+<body>
 
-        <div class="container">
+    <div class="container">
 
-            <h2>✅ KEY BERHASIL DIVERIFIKASI</h2>
+        <h2>✅ KEY BERHASIL DIVERIFIKASI</h2>
 
-            <h3>{kode}</h3>
+        <h3>{kode}</h3>
 
-            <!-- 1POP BANNER -->
-            <div class="ad">
-
-                <iframe
-                    src="https://1pop.online/ad/banner?zone=ZONE_0CBEE4FFE579EC6B&size=728x90"
-                    width="728"
-                    height="90"
-                    frameborder="0"
-                    scrolling="no"
-                    style="border:0;overflow:hidden;max-width:100%;">
-                </iframe>
-
-            </div>
-
+        <!-- Adcash AutoTag -->
+        <div class="ad">
+            <script type="text/javascript">
+                aclib.runAutoTag({{
+                    zoneId: 'cmc7kr6llk',
+                }});
+            </script>
         </div>
 
-    </body>
-    </html>
-    """
+    </div>
+
+</body>
+</html>
+"""
 
 
 @app.post("/validate")
