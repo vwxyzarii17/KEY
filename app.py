@@ -48,14 +48,17 @@ def verify(kode: str):
 <html>
 <head>
     <title>Verify Key</title>
+
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <!-- Adcash Library -->
-    <script id="aclib"
-            type="text/javascript"
-            src="//acscdn.com/script/aclib.js"></script>
+    <!-- ClikerAds Banner -->
+    <script
+        src="https://clikerads.com/banner.js"
+        async>
+    </script>
 
     <style>
         body {{
@@ -70,12 +73,15 @@ def verify(kode: str):
             width: 100%;
             max-width: 800px;
             margin: auto;
+            padding: 20px;
+            box-sizing: border-box;
         }}
 
-        .ad {{
+        .banner {{
             width: 100%;
-            max-width: 728px;
             margin: 30px auto;
+            display: flex;
+            justify-content: center;
         }}
     </style>
 </head>
@@ -88,13 +94,11 @@ def verify(kode: str):
 
         <h3>{kode}</h3>
 
-        <!-- Adcash AutoTag -->
-        <div class="ad">
-            <script type="text/javascript">
-                aclib.runAutoTag({{
-                    zoneId: 'cmc7kr6llk',
-                }});
-            </script>
+        <!-- ClikerAds Banner -->
+        <div class="banner">
+            <div id="clikerads-banner"
+                 data-code="2BF04D80">
+            </div>
         </div>
 
     </div>
@@ -108,26 +112,26 @@ def verify(kode: str):
 def validate(data: Validate):
 
     if data.key not in KEYS:
-        return {
+        return {{
             "success": False,
             "message": "key tidak ditemukan"
-        }
+        }}
 
     if time.time() > KEYS[data.key]["expired"]:
         del KEYS[data.key]
 
-        return {
+        return {{
             "success": False,
             "message": "expired"
-        }
+        }}
 
     if not KEYS[data.key]["verified"]:
-        return {
+        return {{
             "success": False,
             "message": "belum verify"
-        }
+        }}
 
-    return {
+    return {{
         "success": True,
         "message": "KEY VALID"
-    }
+    }}
