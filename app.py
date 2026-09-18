@@ -23,7 +23,7 @@ def home():
     response_class=PlainTextResponse
 )
 def clikerads_verify():
-    return "verify_a0bd63d949f31dff8cf54ba9895456e87f799577"
+    return "a0bd63d949f31dff8cf54ba9895456e87f799577"
 
 
 @app.get("/generate", response_class=PlainTextResponse)
